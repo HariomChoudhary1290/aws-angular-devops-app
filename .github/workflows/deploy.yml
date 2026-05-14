@@ -33,3 +33,9 @@ jobs:
 
       - name: Deploy to S3
         run: aws s3 sync dist/aws-angular-devops-app s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront Cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E2YTL8JCB3AFPA \
+            --paths "/*"
